@@ -7,6 +7,7 @@ import com.example.user.service.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -15,6 +16,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save(User user) {
+        String userId = UUID.randomUUID().toString(); // Generating unique id
+        user.setUserId(userId);
         return userRepository.save(user);
     }
 
@@ -24,7 +27,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUser(int userId) {
+    public User getUser(String userId) {
         return userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("No user found with id: " + userId));
     }
 }
