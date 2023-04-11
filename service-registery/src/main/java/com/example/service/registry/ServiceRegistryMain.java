@@ -1,4 +1,4 @@
-package com.example.service.registery;
+package com.example.service.registry;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,8 +6,8 @@ import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 
 @SpringBootApplication
 @EnableEurekaServer
-public class ServiceRegisteryMain {
+public class ServiceRegistryMain {
     public static void main(String[] args) {
-        SpringApplication.run(ServiceRegisteryMain.class, args);
+        SpringApplication.run(ServiceRegistryMain.class, args);
     }
 }
