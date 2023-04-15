@@ -40,12 +40,16 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("No user found with id: " + userId));
         List<Rating> userRating = getUserRating(userId);
         userRating.forEach(rating -> {
-            String hotelServiceUrl = String.format("http://localhost:8082/hotels/%s", rating.getHotelId());
-            Hotel hotel = restTemplate.getForObject(hotelServiceUrl, Hotel.class);
-            rating.setHotel(hotel);
+            rating.setHotel(getHotelDetail(rating));
         });
         user.setRatings(userRating);
         return user;
+    }
+
+    private Hotel getHotelDetail(Rating rating) {
+        String hotelServiceUrl = String.format("http://localhost:8082/hotels/%s", rating.getHotelId());
+        Hotel hotel = restTemplate.getForObject(hotelServiceUrl, Hotel.class);
+        return hotel;
     }
 
     private List<Rating> getUserRating(String userId) {
