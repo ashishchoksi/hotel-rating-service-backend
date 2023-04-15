@@ -47,13 +47,13 @@ public class UserServiceImpl implements UserService {
     }
 
     private Hotel getHotelDetail(Rating rating) {
-        String hotelServiceUrl = String.format("http://localhost:8082/hotels/%s", rating.getHotelId());
+        String hotelServiceUrl = String.format("http://HOTEL-SERVICE/hotels/%s", rating.getHotelId());
         Hotel hotel = restTemplate.getForObject(hotelServiceUrl, Hotel.class);
         return hotel;
     }
 
     private List<Rating> getUserRating(String userId) {
-        String ratingServiceUrl = String.format("http://localhost:8083/ratings/users/%s", userId);
+        String ratingServiceUrl = String.format("http://RATING-SERVICE/ratings/users/%s", userId);
         log.info("making API call to service: {}", ratingServiceUrl);
         Rating[] ratings = restTemplate.getForObject(ratingServiceUrl, Rating[].class);
         return Arrays.stream(ratings).collect(Collectors.toList());
