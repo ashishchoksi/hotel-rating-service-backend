@@ -4,6 +4,23 @@ server:
 spring:
   application:
     name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+        - id: USER-SERVICE
+          uri: lb://USER-SERVICE # because we are already using service registry
+          predicates:
+            - Path=/users/**
+
+        - id: HOTEL-SERVICE
+          uri: lb://HOTEL-SERVICE # because we are already using service registry
+          predicates:
+            - Path=/hotels/**
+
+        - id: RATING-SERVICE
+          uri: lb://RATING-SERVICE # because we are already using service registry
+          predicates:
+            - Path=/ratings/**
 
 eureka:
   instance:
