@@ -30,18 +30,26 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+        List<User> users = userRepository.findAll();
+        users.forEach(user -> {
+            user.setRatings(getUserRatings(user.getUserId()));
+        });
+        return users;
     }
 
     @Override
     public User getUser(String userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("No user found with id: " + userId));
-        List<Rating> userRating = ratingServiceClient.getUserRatings(userId);
-        userRating.forEach(rating -> {
+        user.setRatings(getUserRatings(userId));
+        return user;
+    }
+
+    private List<Rating> getUserRatings(String userId) {
+        List<Rating> ratings = ratingServiceClient.getUserRatings(userId);
+        ratings.forEach(rating -> {
             rating.setHotel(hotelServiceClient.getHotelDetail(rating.getHotelId()));
         });
-        user.setRatings(userRating);
-        return user;
+        return ratings;
     }
 
 }
