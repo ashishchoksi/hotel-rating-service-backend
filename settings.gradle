@@ -4,4 +4,5 @@ include 'hotel-service'
 include 'rating-service'
 include 'service-registery'
 include 'service-gatewat'
+include 'config-server'
 
