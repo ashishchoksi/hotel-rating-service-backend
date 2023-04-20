@@ -17,14 +17,26 @@ ext {
 }
 
 dependencies {
+    // starter web
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // jpa data
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    compileOnly 'org.projectlombok:lombok'
+
+    // H2 database
     runtimeOnly 'com.h2database:h2'
+
+    // lombok
+    compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // feign client
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 
+    // use config client to get config from github
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
+
+    // register to eureka
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 }
 
