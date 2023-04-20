@@ -17,10 +17,13 @@ spring:
     username: sa
     password: password
     driverClassName: org.h2.Driver
+  config:
+    import: configserver:http://localhost:8085
 
-eureka:
-  instance:
-    preferIpAddress: true
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka
+# commenting eureka config because we will get this from config-server (github)
+#eureka:
+#  instance:
+#    preferIpAddress: true
+#  client:
+#    serviceUrl:
+#      defaultZone: http://localhost:8761/eureka
