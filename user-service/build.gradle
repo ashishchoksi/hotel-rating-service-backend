@@ -10,6 +10,9 @@ sourceCompatibility = '11'
 
 repositories {
     mavenCentral()
+    maven {
+        url = "https://mvnrepository.com/artifact/io.github.resilience4j/resilience4j-spring-boot2"
+    }
 }
 
 ext {
@@ -38,6 +41,15 @@ dependencies {
 
     // register to eureka
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+    
+    // actuator for health check
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    // aop that will ping actuator
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+
+    // this is for circuit breaker
+    implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
 }
 
 dependencyManagement {
