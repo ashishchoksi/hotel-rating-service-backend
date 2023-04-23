@@ -55,3 +55,8 @@ resilience4j:
         sliding-window-type: count_based
         register-health-indicator: true
         event-consumer-buffer-size: 10
+  retry:
+    instances:
+      userRatingService:
+        max-attempts: 3
+        wait-duration: 2s

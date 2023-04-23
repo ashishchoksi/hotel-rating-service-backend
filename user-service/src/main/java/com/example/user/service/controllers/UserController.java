@@ -2,7 +2,9 @@ package com.example.user.service.controllers;
 
 import com.example.user.service.entities.User;
 import com.example.user.service.services.UserService;
+import com.google.common.collect.ImmutableList;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -37,8 +39,15 @@ public class UserController {
     }
 
     @GetMapping("")
+    @Retry(name = "userRatingService", fallbackMethod = "retryLimitExceed")
     public ResponseEntity<List<User>> getAllUsers() {
+        log.info("Getting all the users...");
         List<User> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
+    }
+
+    public ResponseEntity<List<User>> retryLimitExceed(Exception ex) {
+        log.error("Retry Limit Exceed... ");
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(ImmutableList.of());
     }
 }
