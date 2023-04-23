@@ -35,6 +35,15 @@ dependencies {
 
     // use config client to get config from github
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
+
+    // actuator for health check
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    // aop that will ping actuator
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+
+    // this is for circuit breaker
+    implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
 }
 
 dependencyManagement {

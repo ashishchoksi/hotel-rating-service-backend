@@ -27,3 +27,22 @@ spring:
 #  client:
 #    serviceUrl:
 #      defaultZone: http://localhost:8761/eureka
+
+# actuator config
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
+
+# rate limiter config
+resilience4j:
+  ratelimiter:
+    instances:
+      hotelsRateLimit:
+        limit-refresh-period: 10s
+        limit-for-period: 5
+        timeout-duration: 0s
