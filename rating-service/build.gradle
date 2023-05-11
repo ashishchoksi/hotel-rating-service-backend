@@ -35,6 +35,9 @@ dependencies {
 
     // use config client to get config from github
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
+
+    // swagger - spring doc
+    implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
 }
 
 dependencyManagement {

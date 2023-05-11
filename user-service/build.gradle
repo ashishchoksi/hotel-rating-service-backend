@@ -50,6 +50,9 @@ dependencies {
 
     // this is for circuit breaker
     implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
+
+    // swagger - spring doc
+    implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
 }
 
 dependencyManagement {
