@@ -2,24 +2,26 @@ package com.example.rating.service.services.impl;
 
 import com.example.rating.service.entities.Rating;
 import com.example.rating.service.exceptions.ResourceNotFoundException;
-import com.example.rating.service.repositories.RatingRepository;
+import com.example.rating.service.repositories.RatingRepositoryMongo;
 import com.example.rating.service.services.RatingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class RatingServiceImpl implements RatingService {
 
-    private final RatingRepository ratingRepository;
+    /**
+     * We have started with H2 DB repository
+     * Now we are using MongoDB repository
+     */
+    // private final RatingRepository ratingRepository;
+    private final RatingRepositoryMongo ratingRepository;
 
     @Override
     public Rating save(Rating rating) {
-        String ratingId = UUID.randomUUID().toString();
-        rating.setRatingId(ratingId);
         return ratingRepository.save(rating);
     }
 

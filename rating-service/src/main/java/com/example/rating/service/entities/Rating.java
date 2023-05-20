@@ -1,14 +1,11 @@
 package com.example.rating.service.entities;
 
 import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Table(name = "ratings")
-@Entity
 @Data
+@Document("ratings") // mongo-db document name
 public class Rating {
     @Id
     private String ratingId;

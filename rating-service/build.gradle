@@ -20,8 +20,8 @@ dependencies {
     // starter web
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
-    // data jpa
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    // data jpa - No need as we are moving to mongodb repository
+    // implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
     // H2 databse
     runtimeOnly 'com.h2database:h2'
@@ -38,6 +38,11 @@ dependencies {
 
     // swagger - spring doc
     implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
+
+    // mongo-db
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-mongodb
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+
 }
 
 dependencyManagement {
