@@ -1,0 +1,36 @@
+version: '3'
+services:
+  service-registery:
+    container_name: service_registery
+    image: ashish84/service_registery
+    build:
+      context: ./service-registery
+      dockerfile: Dockerfile
+    ports:
+      - 8761:8761
+
+  mongodb:
+    container_name: mongodb
+    image: mongo
+    ports:
+      - 27017:27017
+
+  rating-service:
+    container_name: rating_service
+    image: ashish84/rating_service
+    build:
+      context: ./rating-service
+      dockerfile: Dockerfile
+    ports:
+      - 8083:8083
+    depends_on:
+      - service-registery
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017 # this is used in application.yml
+      - SERVICE_REGISTERY_URL=http://service-registery:8761/eureka # we have to use service name here
+
+
+# todo:
+#- use volumes to store mongodb data
+#- use config-server to fetch the config we need to templatize the rating_registery url in github
+#- push to docker hub
