@@ -9,6 +9,19 @@ services:
     ports:
       - 8761:8761
 
+  config-server:
+    container_name: config_server
+    image: ashish84/config_server
+    build:
+      context: ./config-server
+      dockerfile: Dockerfile
+    ports:
+      - 8085:8085
+    depends_on:
+      - service-registery
+    environment:
+      - SERVICE_REGISTERY_URL:http://service-registery:8761/eureka
+
   mongodb:
     container_name: mongodb
     image: mongo
@@ -25,12 +38,14 @@ services:
       - 8083:8083
     depends_on:
       - service-registery
+      - config-server
+    restart: on-failure
     environment:
       - MONGODB_URI=mongodb://mongodb:27017 # this is used in application.yml
+      - CONFIG_SERVER_URL=http://config-server:8085 # this is used in rating-service application.yml
       - SERVICE_REGISTERY_URL=http://service-registery:8761/eureka # we have to use service name here
 
 
 # todo:
 #- use volumes to store mongodb data
-#- use config-server to fetch the config we need to templatize the rating_registery url in github
 #- push to docker hub
