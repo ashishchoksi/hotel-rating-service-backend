@@ -1,24 +1,20 @@
 server:
   port: 8082
 
+# for local development
+CASSANDRA_HOST: localhost
+CONFIG_SERVER_URL: http://localhost:8085
+
 spring:
   application:
     name: HOTEL-SERVICE
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: update
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-  datasource:
-    url: jdbc:h2:~/hotel # windows -> jdbc:h2:file:/data/hotel
-    username: sa
-    password: password
-    driverClassName: org.h2.Driver
+  data:
+    cassandra:
+      contact-points: ${CASSANDRA_HOST}
+      port: 9042
+      keyspace-name: mykeyspace
   config:
-    import: configserver:http://localhost:8085
+    import: configserver:${CONFIG_SERVER_URL}
 
 # commenting eureka config because we will get this from config-server (github)
 #eureka:
@@ -46,3 +42,18 @@ resilience4j:
         limit-refresh-period: 10s
         limit-for-period: 5
         timeout-duration: 0s
+
+# this need when store data in H2 but now we are storing data in cassandra
+#  jpa:
+#    show-sql: true
+#    hibernate:
+#      ddl-auto: update
+#  h2:
+#    console:
+#      enabled: true
+#      path: /h2-console
+#  datasource:
+#    url: jdbc:h2:~/hotel # windows -> jdbc:h2:file:/data/hotel
+#    username: sa
+#    password: password
+#    driverClassName: org.h2.Driver`

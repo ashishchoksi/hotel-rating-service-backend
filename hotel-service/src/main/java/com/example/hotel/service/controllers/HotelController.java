@@ -1,6 +1,6 @@
 package com.example.hotel.service.controllers;
 
-import com.example.hotel.service.entities.Hotel;
+import com.example.hotel.service.entities.HotelCassandra;
 import com.example.hotel.service.services.HotelService;
 import com.google.common.collect.ImmutableList;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
@@ -24,27 +24,27 @@ public class HotelController {
 
     @PostMapping("")
     @Operation(summary = "create the hotel", description = "create the hotel with valid payload")
-    public ResponseEntity<Hotel> createHotel(@RequestBody Hotel hotel) {
-        Hotel newHotel = hotelService.save(hotel);
+    public ResponseEntity<HotelCassandra> createHotel(@RequestBody HotelCassandra hotel) {
+        HotelCassandra newHotel = hotelService.save(hotel);
         return ResponseEntity.status(HttpStatus.CREATED).body(newHotel);
     }
 
     @GetMapping("/{hotelId}")
     @Operation(summary = "get the hotel by id", description = "get the single hotel by id")
-    public ResponseEntity<Hotel> getHotel(@PathVariable String hotelId) {
-        Hotel hotel = hotelService.getHotel(hotelId);
+    public ResponseEntity<HotelCassandra> getHotel(@PathVariable String hotelId) {
+        HotelCassandra hotel = hotelService.getHotel(hotelId);
         return ResponseEntity.ok(hotel);
     }
 
     @GetMapping("")
     @Operation(summary = "get all the hotels", description = "get all the hotels with ratelimit")
     @RateLimiter(name = "hotelsRateLimit", fallbackMethod = "hotelLimitExceed")
-    public ResponseEntity<List<Hotel>> getAllHotels() {
-        List<Hotel> hotels = hotelService.getAllHotels();
+    public ResponseEntity<List<HotelCassandra>> getAllHotels() {
+        List<HotelCassandra> hotels = hotelService.getAllHotels();
         return ResponseEntity.ok(hotels);
     }
 
-    public ResponseEntity<List<Hotel>> hotelLimitExceed(Exception ex) {
+    public ResponseEntity<List<HotelCassandra>> hotelLimitExceed(Exception ex) {
         log.error("Too many request from user...");
         return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body(ImmutableList.of());
     }

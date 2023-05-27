@@ -1,15 +1,14 @@
 package com.example.hotel.service.services;
 
-import com.example.hotel.service.entities.Hotel;
-
+import com.example.hotel.service.entities.HotelCassandra;
 import java.util.List;
 
 public interface HotelService {
 
-    Hotel save(Hotel hotel);
+    HotelCassandra save(HotelCassandra hotel);
 
-    List<Hotel> getAllHotels();
+    List<HotelCassandra> getAllHotels();
 
-    Hotel getHotel(String hotelId);
+    HotelCassandra getHotel(String hotelId);
 
 }
