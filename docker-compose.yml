@@ -41,7 +41,8 @@ services:
     depends_on:
       - service-registery
       - config-server
-    restart: on-failure
+    restart: on-failure:3
+
     environment:
       - MONGODB_URI=mongodb://mongodb:27017 # this is used in application.yml
       - CONFIG_SERVER_URL=http://config-server:8085 # this is used in rating-service application.yml
@@ -49,5 +50,5 @@ services:
 
 
 # todo:
-#- use volumes to store mongodb data
-#- push to docker hub
+# dockerize hotel service
+# push to docker hub
