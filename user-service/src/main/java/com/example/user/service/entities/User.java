@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "micro_users")
+@Table(name = "users")
 @Data
 @Builder
 @NoArgsConstructor

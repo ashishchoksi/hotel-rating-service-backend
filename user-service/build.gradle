@@ -27,7 +27,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
     // H2 database
-    runtimeOnly 'com.h2database:h2'
+    // runtimeOnly 'com.h2database:h2'
 
     // lombok
     compileOnly 'org.projectlombok:lombok'
@@ -53,6 +53,9 @@ dependencies {
 
     // swagger - spring doc
     implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
+
+    // mysql new connector - version required
+    implementation 'com.mysql:mysql-connector-j:8.0.33'
 }
 
 dependencyManagement {

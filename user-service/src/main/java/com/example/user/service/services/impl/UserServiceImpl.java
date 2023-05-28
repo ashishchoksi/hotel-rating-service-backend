@@ -10,6 +10,7 @@ import com.example.user.service.services.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -45,11 +46,16 @@ public class UserServiceImpl implements UserService {
     }
 
     private List<Rating> getUserRatings(String userId) {
-        List<Rating> ratings = ratingServiceClient.getUserRatings(userId);
-        ratings.forEach(rating -> {
-            rating.setHotel(hotelServiceClient.getHotelDetail(rating.getHotelId()));
-        });
-        return ratings;
+        try {
+            List<Rating> ratings = ratingServiceClient.getUserRatings(userId);
+            ratings.forEach(rating -> {
+                rating.setHotel(hotelServiceClient.getHotelDetail(rating.getHotelId()));
+            });
+            return ratings;
+        } catch (Exception e) {
+            log.error("Error while getting rating / hotel service info...");
+            return Collections.emptyList();
+        }
     }
 
 }
