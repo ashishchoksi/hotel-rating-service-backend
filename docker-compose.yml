@@ -60,6 +60,8 @@ services:
     image: cassandra
     ports:
       - 9042:9042
+    volumes:
+      - ./data/cassandra:/var/lib/cassandra
 
   hotel-service:
     container_name: hotel_service
