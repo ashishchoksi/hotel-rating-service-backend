@@ -83,3 +83,33 @@ services:
       - CASSANDRA_HOST=cassandra # service name line no - 56
       - CONFIG_SERVER_URL=http://config-server:8085 # no localhost allowed for cross service communication
       - SERVICE_REGISTERY_URL=http://service-registery:8761/eureka
+
+  mysql:
+    container_name: mysql
+    image: mysql
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+
+  user-service:
+    container_name: user_service
+    image: ashish84/user_service
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
+    ports:
+      - 8081:8081
+    depends_on:
+      service-registery:
+        condition: service_started
+      config-server:
+        condition: service_healthy
+      mysql:
+        condition: service_started
+    environment:
+      - MYSQL_URL=jdbc:mysql://mysql:3306/micro_service?createDatabaseIfNotExist=true
+      - CONFIG_SERVER_URL=http://config-server:8085 # no localhost allowed for cross service communication
+      - SERVICE_REGISTERY_URL=http://service-registery:8761/eureka

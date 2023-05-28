@@ -1,6 +1,9 @@
 server:
   port: 8081
 
+MYSQL_URL: jdbc:mysql://localhost:3306/micro_service?createDatabaseIfNotExist=true
+CONFIG_SERVER_URL: http://localhost:8085
+
 spring:
   application:
     name: USER-SERVICE
@@ -9,11 +12,11 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: jdbc:mysql://localhost:3306/micro_service?createDatabaseIfNotExist=true
+    url: ${MYSQL_URL}
     username: root
     password: root
   config:
-    import: configserver:http://localhost:8085
+    import: configserver:${CONFIG_SERVER_URL}
 
 # commenting eureka config because we will get this from config-server (github)
 #eureka:
