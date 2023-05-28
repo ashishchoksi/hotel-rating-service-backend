@@ -48,7 +48,36 @@ services:
         condition: service_started
       config-server:
         condition: service_healthy
+      mongodb:
+        condition: service_started
     environment:
       - MONGODB_URI=mongodb://mongodb:27017 # this is used in application.yml
       - CONFIG_SERVER_URL=http://config-server:8085 # this is used in rating-service application.yml
       - SERVICE_REGISTERY_URL=http://service-registery:8761/eureka # we have to use service name here
+
+  cassandra:
+    container_name: cassandra
+    image: cassandra
+    ports:
+      - 9042:9042
+
+  hotel-service:
+    container_name: hotel_service
+    image: ashish84/hotel_service
+    build:
+      context: ./hotel-service
+      dockerfile: Dockerfile
+    ports:
+      - 8082:8082
+    depends_on:
+      service-registery:
+        condition: service_started
+      config-server:
+        condition: service_healthy
+      cassandra:
+        condition: service_started
+    restart: on-failure:10 # because cassandra health check yet to implement is it failing to conect to cassandra
+    environment:
+      - CASSANDRA_HOST=cassandra # service name line no - 56
+      - CONFIG_SERVER_URL=http://config-server:8085 # no localhost allowed for cross service communication
+      - SERVICE_REGISTERY_URL=http://service-registery:8761/eureka
