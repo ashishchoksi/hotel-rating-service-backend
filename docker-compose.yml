@@ -21,6 +21,11 @@ services:
       - service-registery
     environment:
       - SERVICE_REGISTERY_URL=http://service-registery:8761/eureka
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://config-server:8085/actuator/health"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
 
   mongodb:
     container_name: mongodb
@@ -39,16 +44,11 @@ services:
     ports:
       - 8083:8083
     depends_on:
-      - service-registery
-      - config-server
-    restart: on-failure:3
-
+      service-registery:
+        condition: service_started
+      config-server:
+        condition: service_healthy
     environment:
       - MONGODB_URI=mongodb://mongodb:27017 # this is used in application.yml
       - CONFIG_SERVER_URL=http://config-server:8085 # this is used in rating-service application.yml
       - SERVICE_REGISTERY_URL=http://service-registery:8761/eureka # we have to use service name here
-
-
-# todo:
-# dockerize hotel service
-# push to docker hub
