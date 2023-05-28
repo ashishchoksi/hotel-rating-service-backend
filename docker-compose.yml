@@ -20,7 +20,7 @@ services:
     depends_on:
       - service-registery
     environment:
-      - SERVICE_REGISTERY_URL:http://service-registery:8761/eureka
+      - SERVICE_REGISTERY_URL=http://service-registery:8761/eureka
 
   mongodb:
     container_name: mongodb
