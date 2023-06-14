@@ -1,0 +1,27 @@
+server:
+  port: 8082
+
+# for local development
+CASSANDRA_HOST: localhost
+CONFIG_SERVER_URL: http://localhost:8085
+
+spring:
+  application:
+    name: HOTEL-SERVICE
+  data:
+    cassandra:
+      contact-points: ${CASSANDRA_HOST}
+      port: 9042
+      keyspace-name: mykeyspace
+  cloud:
+    config:
+      enabled: false
+
+# rate limiter config
+resilience4j:
+  ratelimiter:
+    instances:
+      hotelsRateLimit:
+        limit-refresh-period: 10s
+        limit-for-period: 5
+        timeout-duration: 0s

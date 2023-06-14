@@ -51,6 +51,8 @@ dependencies {
     // cassandra Db
     implementation 'org.springframework.boot:spring-boot-starter-data-cassandra'
 
+    // unit test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 dependencyManagement {
